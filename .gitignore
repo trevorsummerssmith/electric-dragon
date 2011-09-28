@@ -1,0 +1,7 @@
+*~
+# Go compile files
+*.6
+*.8
+_obj
+_test
+*.out
