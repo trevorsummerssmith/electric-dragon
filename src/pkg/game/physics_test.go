@@ -39,11 +39,11 @@ func TestMove(t *testing.T) {
 	c := &BasicCharacter{totalEnergy: 10, currentEnergy: 10}
 	c.SetIdx(Idx{Row: 2, Col: 1})
 
-	// Move one index
-	idxs := make([]RelativeIdx, 1)
-	idxs[0].Y = 2
-	idxs[0].X = 1
-	m := &Move{RelativeIndices: idxs}
+	// Move two steps
+	steps := make([]CompassDir, 2)
+	steps[0] = NE
+	steps[1] = N
+	m := &Move{Steps: steps}
 	physics.move(c, m)
 
 	// Ensure move happened to character

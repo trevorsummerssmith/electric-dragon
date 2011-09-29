@@ -4,7 +4,7 @@ type Action interface {
 }
 
 type Move struct {
-	RelativeIndices []RelativeIdx
+	Steps []CompassDir
 }
 
 type Attack struct {

@@ -43,10 +43,10 @@ func (p *Physics) attack(c Character, attack *Attack) os.Error {
 func (p *Physics) move(c Character, move *Move) os.Error {
 
 	// Is it possible for the character to move ridx?
-	for i := 0; i < len(move.RelativeIndices); i++ {
-		ridx := move.RelativeIndices[i]
+	for i := 0; i < len(move.Steps); i++ {
+		ridx := NewRelativeIdx(move.Steps[i])
 		newIdx := c.Idx()
-		newIdx.AddRelativeIdx(ridx)
+		newIdx.AddRelativeIdx(*ridx)
 
 		// 1) Character-specific move function check (can they move?)
 		// TODO check attributes of the character and other stuff.
