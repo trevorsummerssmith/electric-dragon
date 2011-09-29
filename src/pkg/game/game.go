@@ -61,7 +61,7 @@ type Board struct {
 	characters []Character
 }
 
-func New(rows uint, cols uint) *Board {
+func NewBoard(rows int, cols int) *Board {
 	cells := make([][]Cell, rows)
 
 	for i := 0; i < rows; i++ {

@@ -6,7 +6,7 @@ import (
 
 
 func TestBoard(t *testing.T) {
-	b := New(10, 20)
+	b := NewBoard(10, 20)
 	if b.rows != 10 {
 		t.Errorf("Rows must be 10 but is %d", b.rows)
 	}

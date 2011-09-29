@@ -33,7 +33,7 @@ func assertCellCharactersEqual(t *testing.T, c Cell, expected *vector.Vector) {
 
 func TestMove(t *testing.T) {
 	// 5x5 Board
-	board := New(5, 5)
+	board := NewBoard(5, 5)
 	physics := &Physics{Board: board}
 
 	c := &BasicCharacter{totalEnergy: 10, currentEnergy: 10}
