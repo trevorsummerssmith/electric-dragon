@@ -57,6 +57,15 @@ func New(rows uint, cols uint) *Board {
 	}
 }
 
+func (b *Board) GetCell(idx Idx) (cell Cell, err os.Error) {
+	if !b.ValidIdx(idx) {
+		err = os.NewError("Index out of bounds")
+		return
+	}
+	cell = b.cells[idx.Row][idx.Col]
+	return
+}
+
 func (b *Board) ValidIdx(idx Idx) bool {
 	return idx.Row < b.rows && idx.Col < b.cols
 }
