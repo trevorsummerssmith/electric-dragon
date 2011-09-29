@@ -11,6 +11,8 @@ type Character interface {
 	Energy() uint
 	SetEnergy(e uint) os.Error
 
+	EnergyCost(p ActionParams) uint
+
 	Idx() Idx
 
 	// Note this does not do any validation.
@@ -48,6 +50,30 @@ func (b *BasicCharacter) SetEnergy(e uint) os.Error {
 	}
 	b.currentEnergy = e
 	return nil
+}
+
+func (b *BasicCharacter) EnergyCost(p ActionParams) uint {
+	switch obj := p.(type) {
+	case *MoveParams:
+		// This is just an example for now
+		// This character moves easily through everything except swamp
+		switch obj.CellType {
+		case Grass:
+			return 1
+		case Mountain:
+			return 1
+		case Sand:
+			return 1
+		case Swamp:
+			return 2
+		default:
+			return 1 // TODO(trevor) error handle
+		 }
+	case *AttackParams:
+		return 2
+	}
+
+	return 3
 }
 
 func (b *BasicCharacter) Idx() Idx {
