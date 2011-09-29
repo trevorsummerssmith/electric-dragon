@@ -14,6 +14,11 @@ type Idx struct {
 	Col uint
 }
 
+type RelativeIdx struct {
+	X uint
+	Y uint
+}
+
 type Board struct {
 	// Number of rows in the board
 	rows uint
@@ -69,4 +74,9 @@ func (b *Board) PlaceObject(pobj PlacedObject, idx Idx) os.Error {
 
 func (b *Board) AddCharacter(c Character) {
 	b.characters = append(b.characters, c)
+}
+
+func (i *Idx) AddRelativeIdx(ridx RelativeIdx) {
+	i.Row += ridx.Y
+	i.Col += ridx.X
 }
