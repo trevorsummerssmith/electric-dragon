@@ -19,6 +19,33 @@ type RelativeIdx struct {
 	Y int
 }
 
+type CompassDir int
+
+const (
+	N CompassDir = iota
+	NE
+	E
+	SE
+	S
+	SW
+	W
+	NW
+)
+
+func NewRelativeIdx(dir CompassDir) *RelativeIdx {
+	switch dir {
+	case N:  return &RelativeIdx{0,   1}
+	case NE: return &RelativeIdx{1,   1}
+	case E:  return &RelativeIdx{1,   0}
+	case SE: return &RelativeIdx{1,  -1}
+	case S:  return &RelativeIdx{0,  -1}
+	case SW: return &RelativeIdx{-1, -1}
+	case W:  return &RelativeIdx{-1,  0}
+	case NW: return &RelativeIdx{-1,  1}
+	}
+	return nil
+}
+
 type Board struct {
 	// Number of rows in the board
 	rows int
