@@ -8,6 +8,7 @@ type Move struct {
 }
 
 type Attack struct {
+	Target RelativeIdx
 }
 
 // Physics -> Character Param bundles
