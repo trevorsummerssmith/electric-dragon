@@ -9,6 +9,16 @@ type PlacedObject interface {
 	SetIdx(idx Idx)
 }
 
+type CellType int
+
+const (
+	UndefinedCellType CellType = iota
+	Grass
+	Mountain
+	Sand
+	Swamp
+	)
+
 type Cell interface {
 	PlacedObjects() *vector.Vector
 	SetPlacedObjects(p *vector.Vector)
@@ -16,16 +26,18 @@ type Cell interface {
 	RemovePlacedObject(p PlacedObject)
 	Idx() Idx
 	SetIdx(idx Idx)
+	CellType() CellType
 }
 
 type BasicCell struct {
 	objects *vector.Vector
 	idx Idx
+	cellType CellType
 }
 
-func NewBasicCell(idx Idx) *BasicCell {
+func NewBasicCell(idx Idx, cellType CellType) *BasicCell {
 	v := new(vector.Vector)
-	return &BasicCell{objects: v, idx: idx}
+	return &BasicCell{objects: v, idx: idx, cellType: cellType}
 }
 
 func (c *BasicCell) PlacedObjects() *vector.Vector {
@@ -55,4 +67,8 @@ func (c *BasicCell) Idx() Idx {
 
 func (c *BasicCell) SetIdx(idx Idx) {
 	c.idx = idx
+}
+
+func (c *BasicCell) CellType() CellType {
+	return c.cellType
 }

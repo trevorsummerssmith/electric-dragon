@@ -37,7 +37,7 @@ func New(rows uint, cols uint) *Board {
 		// Allocate the cells
 		for j := 0; j < int(cols); j++ {
 			idx := Idx{Row: uint(i), Col: uint(j)}
-			cells[i][j] = NewBasicCell(idx)
+			cells[i][j] = NewBasicCell(idx, UndefinedCellType)
 		}
 	}
 
