@@ -70,6 +70,15 @@ func (b *Board) ValidIdx(idx Idx) bool {
 	return idx.Row < b.rows && idx.Col < b.cols
 }
 
+func (b *Board) ClampIdx(idx *Idx) {
+	if idx.Row >= b.rows {
+		idx.Row = b.rows - 1
+	}
+	if idx.Col >= b.cols {
+		idx.Col = b.cols - 1
+	}
+}
+
 func (b *Board) PlaceObject(pobj PlacedObject, idx Idx) os.Error {
 	if !b.ValidIdx(idx) {
 		return os.NewError("Index out of bounds")
