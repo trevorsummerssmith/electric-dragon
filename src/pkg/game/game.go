@@ -10,21 +10,21 @@ const (
 )
 
 type Idx struct {
-	Row uint
-	Col uint
+	Row int
+	Col int
 }
 
 type RelativeIdx struct {
-	X uint
-	Y uint
+	X int
+	Y int
 }
 
 type Board struct {
 	// Number of rows in the board
-	rows uint
+	rows int
 
 	// Number of cells in a row
-	cols uint
+	cols int
 
 	// Slice of the Cells that make up the board
 	// Dimensions are: [rows][cols]Cell
@@ -37,11 +37,11 @@ type Board struct {
 func New(rows uint, cols uint) *Board {
 	cells := make([][]Cell, rows)
 
-	for i := 0; i < int(rows); i++ {
+	for i := 0; i < rows; i++ {
 		cells[i] = make([]Cell, cols)
 		// Allocate the cells
-		for j := 0; j < int(cols); j++ {
-			idx := Idx{Row: uint(i), Col: uint(j)}
+		for j := 0; j < cols; j++ {
+			idx := Idx{Row: i, Col: j}
 			cells[i][j] = NewBasicCell(idx, UndefinedCellType)
 		}
 	}
