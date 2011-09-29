@@ -7,6 +7,10 @@ import (
 type Character interface {
 	HP() uint
 	SetHP(hp uint) os.Error
+
+	Energy() uint
+	SetEnergy(e uint) os.Error
+
 	Idx() Idx
 
 	// Note this does not do any validation.
@@ -17,6 +21,8 @@ type Character interface {
 type BasicCharacter struct {
 	totalHP uint
 	currentHP uint
+	totalEnergy uint
+	currentEnergy uint
 	idx Idx
 }
 
@@ -29,6 +35,18 @@ func (b *BasicCharacter) SetHP(hp uint) os.Error {
 		return os.NewError("HP out of range")
 	}
 	b.currentHP = hp
+	return nil
+}
+
+func (b *BasicCharacter) Energy() uint {
+	return b.currentEnergy
+}
+
+func (b *BasicCharacter) SetEnergy(e uint) os.Error {
+	if e > b.totalEnergy {
+		return os.NewError("Energy out of range")
+	}
+	b.currentEnergy = e
 	return nil
 }
 
