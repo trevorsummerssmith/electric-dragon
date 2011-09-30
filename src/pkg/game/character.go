@@ -4,9 +4,15 @@ import (
 	"os"
 )
 
-type Character interface {
+type Attackable interface {
+	// Absolute attribute, how much defense the unit has
+	DefensePoints() uint
 	HP() uint
 	SetHP(hp uint) os.Error
+}
+
+type Character interface {
+	Attackable
 
 	Energy() uint
 	SetEnergy(e uint) os.Error
@@ -26,6 +32,11 @@ type BasicCharacter struct {
 	totalEnergy uint
 	currentEnergy uint
 	idx Idx
+}
+
+func (b *BasicCharacter) DefensePoints () uint {
+	// Basic Character has 1 defense point for now.
+	return 1
 }
 
 func (b *BasicCharacter) HP() uint {
