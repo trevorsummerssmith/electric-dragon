@@ -2,7 +2,6 @@ package game
 
 import (
 	"testing"
-	"container/vector"
 )
 
 func assertEqualIdx(t *testing.T, idx Idx, expected Idx) {
@@ -14,19 +13,19 @@ func assertEqualIdx(t *testing.T, idx Idx, expected Idx) {
 	}
 }
 
-func assertCellCharactersEqual(t *testing.T, c Cell, expected *vector.Vector) {
+func assertCellCharactersEqual(t *testing.T, c Cell, expected []PlacedObject) {
 	guys := c.PlacedObjects()
-	if guys.Len() != expected.Len() {
+	if len(guys) != len(expected) {
 		t.Errorf("Cell should only have %d characters, has %d",
-			expected.Len(), guys.Len())
+			len(expected), len(guys))
 		return
 	}
 
 	// Len is same so compare guys... expect the same order
-	for i := 0; i < guys.Len(); i++ {
-		if guys.At(i) != expected.At(i) {
+	for i := 0; i < len(guys); i++ {
+		if guys[i] != expected[i] {
 			t.Errorf("Character at position %d should be: %v, is %v",
-				i, guys.At(i), expected.At(i))
+				i, guys[i], expected[i])
 		}
 	}
 }

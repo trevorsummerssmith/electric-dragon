@@ -19,8 +19,7 @@ func TestBoard(t *testing.T) {
 
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 20; j++ {
-			guys := b.cells[i][j].PlacedObjects()
-			n := guys.Len()
+			n := len(b.cells[i][j].PlacedObjects())
 			if i == 4 && j == 8 {
 				if n != 1 {
 					t.Errorf("This row should have 1 guy")

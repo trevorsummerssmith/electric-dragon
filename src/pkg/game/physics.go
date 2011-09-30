@@ -71,7 +71,7 @@ func (p *Physics) move(c Character, move *Move) os.Error {
 
 		// 4) Ensure character can fit on cell
 		// If not, move is to same cell
-		numGuys := cell.PlacedObjects().Len()
+		numGuys := len(cell.PlacedObjects())
 		if numGuys >= MaxGuysOnCell {
 			newIdx = c.Idx()
 		}

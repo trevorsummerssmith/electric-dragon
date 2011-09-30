@@ -1,9 +1,5 @@
 package game
 
-import (
-	"container/vector"
-)
-
 type PlacedObject interface {
 	Idx() Idx
 	SetIdx(idx Idx)
@@ -20,43 +16,46 @@ const (
 	)
 
 type Cell interface {
-	PlacedObjects() *vector.Vector
-	SetPlacedObjects(p *vector.Vector)
+	PlacedObjects() []PlacedObject
+	SetPlacedObjects(ps []PlacedObject)
 	AddPlacedObject(p PlacedObject)
 	RemovePlacedObject(p PlacedObject)
+
 	Idx() Idx
 	SetIdx(idx Idx)
 	CellType() CellType
 }
 
 type BasicCell struct {
-	objects *vector.Vector
+	placedObjects []PlacedObject
 	idx Idx
 	cellType CellType
 }
 
 func NewBasicCell(idx Idx, cellType CellType) *BasicCell {
-	v := new(vector.Vector)
-	return &BasicCell{objects: v, idx: idx, cellType: cellType}
+	ps := make([]PlacedObject, 0)
+	return &BasicCell{placedObjects: ps, idx: idx, cellType: cellType}
 }
 
-func (c *BasicCell) PlacedObjects() *vector.Vector {
-	return c.objects
+func (c *BasicCell) PlacedObjects() []PlacedObject {
+	return c.placedObjects
 }
 
-func (c *BasicCell) SetPlacedObjects(p *vector.Vector) {
-	c.objects = p
+func (c *BasicCell) SetPlacedObjects(ps []PlacedObject) {
+	c.placedObjects = ps
 }
 
 func (c *BasicCell) AddPlacedObject(p PlacedObject) {
-	c.objects.Push(p)
+	c.placedObjects = append(c.placedObjects, p)
 }
 
 func (c *BasicCell) RemovePlacedObject(p PlacedObject) {
-	for i := 0; i < c.objects.Len(); i++ {
-		if c.objects.At(i) == p {
-			c.objects.Delete(i)
-			break
+	for i := 0; i < len(c.placedObjects); i++ {
+		if c.placedObjects[i] == p {
+			c.placedObjects = append(c.placedObjects[:i],
+				                 c.placedObjects[i+1:]...)
+			// Optimization: bail after we found a guy.
+			return
 		}
 	}
 }
