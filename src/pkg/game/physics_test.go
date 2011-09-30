@@ -78,8 +78,9 @@ func TestAttack(t *testing.T) {
 	if c1.currentEnergy != 8 {
 		t.Errorf("Character energy should be %d, is %d", 8, c1.currentEnergy)
 	}
-	if c2.currentHP != 10 {
-		t.Errorf("Character 2 HP should be %d, is %d", 10, c2.currentHP)
+	// C2 has 1 defense point so 9 damage is done
+	if c2.currentHP != 11 {
+		t.Errorf("Character 2 HP should be %d, is %d", 11, c2.currentHP)
 	}
 	
 }

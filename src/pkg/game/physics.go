@@ -59,10 +59,15 @@ func (p *Physics) attack(c Character, attack *Attack) os.Error {
 	// Attack, for now just attack everyone in the list of characters on
 	// the given cell
 	for i := 0; i < len(attackees); i++ {
-		// Calculate Damage
+		// Calculate Damage -- currently an arbitrary attack amount minus defense
 		attackee := attackees[i]
 		hp := attackee.HP()
-		hp -= 10
+		dp := attackee.DefensePoints()
+		damage := 10 - dp
+		if damage < 0 {
+			damage = 0
+		}
+		hp -= damage
 		attackee.SetHP(hp)
 	}
 
