@@ -30,7 +30,45 @@ func (p *Physics) Update(c Character, a Action) os.Error {
 }
 
 func (p *Physics) attack(c Character, attack *Attack) os.Error {
-	// Is it possible for the character to move ridx?
+
+	// 1) Character-specific attack function check? TODO
+
+	// 2) Ensure the attack is inside the board
+	idx := c.Idx()
+	idx.AddRelativeIdx(attack.Target)	
+	p.Board.ClampIdx(&idx)
+
+	// Get attack param information to give to user energy
+	cell, err := p.Board.GetCell(idx)
+	if err != nil {
+		return err
+	}
+	
+	attackees := cell.Characters()
+	attackParams := &AttackParams{Attack: attack,
+	                              CellType: cell.CellType(),
+	                              Characters: attackees}
+
+	// 3) Energy check
+	cost := c.EnergyCost(attackParams)
+	energy := c.Energy()
+	if cost > energy {
+		return os.NewError("Not enough energy")
+	}
+
+	// Attack, for now just attack everyone in the list of characters on
+	// the given cell
+	for i := 0; i < len(attackees); i++ {
+		// Calculate Damage
+		attackee := attackees[i]
+		hp := attackee.HP()
+		hp -= 10
+		attackee.SetHP(hp)
+	}
+
+	// Remove energy
+	c.SetEnergy(energy - cost)
+
 	return nil
 }
 

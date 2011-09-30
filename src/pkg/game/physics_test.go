@@ -54,5 +54,32 @@ func TestMove(t *testing.T) {
 	if err != nil {
 		t.Errorf("Invalid index passed to board (SERIOUS PROBLEM)")
 	}
-	assertCellCharactersEqual(t, cell, &vector.Vector{c})
+	assertCellCharactersEqual(t, cell, []PlacedObject{c})
+}
+
+func TestAttack(t *testing.T) {
+	// 5x5 Board
+	board := NewBoard(5, 5)
+	physics := &Physics{Board: board}
+
+	// Guy at 2, 1
+	c1 := &BasicCharacter{totalEnergy: 10, currentEnergy: 10}
+	board.PlaceObject(c1, Idx{Row: 2, Col: 1})
+
+	// Guy at 2, 2
+	c2 := &BasicCharacter{totalEnergy: 10, currentEnergy: 10,
+	                      totalHP: 20, currentHP: 20}
+	board.PlaceObject(c2, Idx{Row: 2, Col: 2})
+
+	// C1 attacks C2
+	attack := &Attack{Target: RelativeIdx{Y: 0, X: 1}}
+	physics.attack(c1, attack)
+
+	if c1.currentEnergy != 8 {
+		t.Errorf("Character energy should be %d, is %d", 8, c1.currentEnergy)
+	}
+	if c2.currentHP != 10 {
+		t.Errorf("Character 2 HP should be %d, is %d", 10, c2.currentHP)
+	}
+	
 }
