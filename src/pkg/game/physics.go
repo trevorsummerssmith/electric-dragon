@@ -63,7 +63,7 @@ func (p *Physics) attack(c Character, attack *Attack) os.Error {
 		attackee := attackees[i]
 		hp := attackee.HP()
 		dp := attackee.DefensePoints()
-		damage := 10 - dp
+		damage := c.Damage(attackee) - dp
 		if damage < 0 {
 			damage = 0
 		}
