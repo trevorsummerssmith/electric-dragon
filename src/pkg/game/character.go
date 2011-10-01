@@ -11,8 +11,13 @@ type Attackable interface {
 	SetHP(hp uint) os.Error
 }
 
+type Attacker interface {
+	Damage(a Attackable) uint
+}
+
 type Character interface {
 	Attackable
+	Attacker
 
 	Energy() uint
 	SetEnergy(e uint) os.Error
@@ -49,6 +54,11 @@ func (b *BasicCharacter) SetHP(hp uint) os.Error {
 	}
 	b.currentHP = hp
 	return nil
+}
+
+func (b *BasicCharacter) Damage(a Attackable) uint {
+	// For the moment basic character will do equal damage to everything
+	return 10
 }
 
 func (b *BasicCharacter) Energy() uint {
